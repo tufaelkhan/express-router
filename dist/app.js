@@ -14,13 +14,22 @@ const userRouter = express_1.default.Router();
 const courseRouter = express_1.default.Router();
 app.use('/api/v1/courses', courseRouter);
 app.use('/api/v1/users', userRouter);
-userRouter.get("/create-user", (req, res) => {
+userRouter.post("/create-user", (req, res) => {
     const user = req.body;
     console.log(user);
     res.send({
         success: true,
         message: "user created successfully",
         data: user,
+    });
+});
+courseRouter.post('/create-course', (req, res) => {
+    const course = req.body;
+    console.log(course);
+    res.send({
+        success: true,
+        message: "course created successfully",
+        data: course,
     });
 });
 // middleware
