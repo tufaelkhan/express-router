@@ -1,3 +1,4 @@
+import { error } from "console";
 import express, { NextFunction, Request, Response } from "express";
 const app = express();
 const port = 3000;
@@ -9,8 +10,8 @@ app.use(express.text());
 // router
 const userRouter = express.Router();
 const courseRouter = express.Router();
-app.use('/api/v1/courses', courseRouter)
 app.use('/api/v1/users', userRouter)
+app.use('/api/v1/courses', courseRouter)
 
 userRouter.post(
   "/create-user",
@@ -42,9 +43,17 @@ const logger = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-app.get("/", logger, (req: Request, res: Response) => {
+app.get("/", logger, async(req: Request, res: Response, next: NextFunction) => {
   // console.log(req.query.email);
-  res.send("Hello developers welcome next level web development!");
+  try{
+    res.send(something);
+  }catch(error){
+    next(error)
+    // res.status(400).json({
+    //     success: false,
+    //     message: "failed to get data"
+    // })
+  }
 });
 
 app.post("/", logger, (req: Request, res: Response) => {
@@ -53,5 +62,22 @@ app.post("/", logger, (req: Request, res: Response) => {
     message: "successfully send data",
   });
 });
+
+app.all("*", (req:Request, res:Response) =>{
+    res.status(400).json({
+        success: false,
+        message: 'Route not found'
+    })
+})
+
+// global error handler
+app.use((error: any, req: Request, res: Response, next: NextFunction)=> {
+   if(error){
+    res.status(400).json({
+        success: false,
+        message: 'something went wrong'
+    })
+   }
+})
 
 export default app;
