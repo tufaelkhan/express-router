@@ -49,7 +49,7 @@ const logger = (req, res, next) => {
 app.get("/", logger, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     // console.log(req.query.email);
     try {
-        res.send(something);
+        res.send({});
     }
     catch (error) {
         next(error);

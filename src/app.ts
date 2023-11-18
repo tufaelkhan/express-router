@@ -46,7 +46,7 @@ const logger = (req: Request, res: Response, next: NextFunction) => {
 app.get("/", logger, async(req: Request, res: Response, next: NextFunction) => {
   // console.log(req.query.email);
   try{
-    res.send(something);
+    res.send({});
   }catch(error){
     next(error)
     // res.status(400).json({
